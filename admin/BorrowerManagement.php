@@ -1,7 +1,14 @@
+
+<?php
+// config
+include "../../action/config.php";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Overview | MCF</title>
+    <title>Borrower Management | MCF</title>
 
     <!-- Meta -->
     <meta charset="utf-8">
@@ -19,8 +26,6 @@
 </head>
 
 <body class="app">
-
-
 <header class="app-header fixed-top">
     <div class="app-header-inner">
         <div class="container-fluid py-2">
@@ -55,7 +60,7 @@
                 <ul class="app-menu list-unstyled accordion" id="menu-accordion">
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link active" href="index.html">
+                        <a class="nav-link" href="index.php">
 						        <span class="nav-icon">
 						        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 		  <path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z"/>
@@ -67,7 +72,7 @@
                     </li><!--//nav-item-->
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link" href="BorrowerManagement.html">
+                        <a class="nav-link active" href="BorrowerManagement.html">
 						        <span class="nav-icon">
 						       <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-people" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                   <path fill-rule="evenodd" d="M12.5 10.5a2 2 0 1 0-3.999-.001A2 2 0 0 0 12.5 10.5zm-7 0a2 2 0 1 0-3.999-.001A2 2 0 0 0 5.5 10.5zm5-7a3 3 0 1 1-5.999-.001A3 3 0 0 1 10.5 3.5z"/>
@@ -77,6 +82,7 @@
                             <span class="nav-link-text">Borrowers Management</span>
                         </a><!--//nav-link-->
                     </li><!--//nav-item-->
+
                     <li class="nav-item has-submenu">
                         <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
 						        <span class="nav-icon">
@@ -89,8 +95,8 @@
                         </a><!--//nav-link-->
                         <div id="submenu-1" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
                             <ul class="submenu-list list-unstyled">
-                                <li class="submenu-item"><a class="submenu-link" href="EmployeeMangement.html">Show Employees</a></li>
-                                <li class="submenu-item"><a class="submenu-link" href="AddEmployee.html">Add Employee</a></li>
+                                <li class="submenu-item"><a class="submenu-link" href="EmployeeMangement.php">Show Employees</a></li>
+                                <li class="submenu-item"><a class="submenu-link" href="AddEmployee.php">Add Employee</a></li>
 <!--
                                 <li class="submenu-item"><a class="submenu-link" href="SendNotification.html">Send Notification</a></li>
 -->
@@ -99,7 +105,7 @@
                         </div>
                     </li><!--//nav-item-->
                     <li class="nav-item has-submenu">
-                        <a class="nav-link submenu-toggle " href="#" data-bs-toggle="collapse" data-bs-target="#submenu-2" aria-expanded="false" aria-controls="submenu-2">
+                        <a class="nav-link submenu-toggle  " href="#" data-bs-toggle="collapse" data-bs-target="#submenu-2" aria-expanded="false" aria-controls="submenu-2">
 						        <span class="nav-icon">
 						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
 						            <i class="fas fa-building"></i>
@@ -112,8 +118,8 @@
                         </a><!--//nav-link-->
                         <div id="submenu-2" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
                             <ul class="submenu-list list-unstyled">
-                                <li class="submenu-item"><a class="submenu-link" href="DepartmentManagement.html">Show Department</a></li>
-                                <li class="submenu-item"><a class="submenu-link" href="AddDepartment.html">Add Department</a></li>
+                                <li class="submenu-item"><a class="submenu-link active" href="DepartmentManagement.php">Show Department</a></li>
+                                <li class="submenu-item"><a class="submenu-link" href="AddDepartment.php">Add Department</a></li>
                             </ul>
                         </div>
                     </li><!--//nav-item-->
@@ -132,6 +138,7 @@
     </div><!--//app-sidepanel-->
 </header><!--//app-header-->
 
+
 <div class="app-wrapper">
 
     <div class="app-content pt-3 p-md-3 p-lg-4">
@@ -139,147 +146,86 @@
 
             <div class="row g-3 mb-4 align-items-center justify-content-between">
                 <div class="col-auto">
-                    <h1 class="app-page-title mb-0">Overview</h1>
+                    <h1 class="app-page-title mb-0">Borrowers Management</h1>
                 </div>
-                <div class="app-card alert alert-dismissible shadow-sm mb-4 border-left-decoration" role="alert">
-                    <div class="inner">
-                        <div class="app-card-body p-3 p-lg-4">
-                            <h3 class="mb-3">Welcome, Admin!</h3>
-                            <div class="row gx-5 gy-3">
-                                <div class="col-12 col-lg-9">
 
-                                </div><!--//col-->
-                            </div><!--//row-->
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div><!--//app-card-body-->
+                <div class="tab-content" id="borrowers-table-tab-content">
+                    <!-- Add this section below the borrowers' table -->
+                    <div class="tab-pane fade show active" id="borrowers" role="tabpanel" aria-labelledby="borrowers-tab">
+                        <div class="app-card app-card-borrowers-table shadow-sm mb-5">
+                            <div class="app-card-body">
+                                <div class="table-responsive">
+                                    <table class="table app-table-hover mb-0 text-left">
+                                        <thead>
+                                        <tr>
+                                            <th class="cell">ID</th>
+                                            <th class="cell">Name</th>
+                                            <th class="cell">Borrowed Quantity</th>
+                                            <th class="cell">Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="borrowers-table-body">
+                                        <?php
+                                        // get employee_id and employee name and borrowed quantity from database tables (employee,requests) depend on employee id
+                                        $sql = "SELECT * FROM employee";
+                                        $result = $conn->query($sql);
+                                        // display employee data in table
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                // get borrowed quantity from requests
+                                                $employee_id = $row["employee_id"];
+                                                $sql2 = "SELECT * FROM requests WHERE employee_id = '$employee_id'";
+                                                $result2 = $conn->query($sql2);
+                                                if ($result2->num_rows > 0) {
+                                                    $row2 = $result2->fetch_assoc();
+                                                    $borrowed_quantity = $row2["quantity"];
+                                                } else {
+                                                    $borrowed_quantity = 0;
+                                                }
+                                                if($borrowed_quantity == 0){
+                                                    continue;
+                                                }
+                                                echo "<tr>";
+                                                echo "<td>" . $row["employee_id"] . "</td>";
+                                                echo "<td>" . $row["name"] . "</td>";
+                                                echo "<td>" . $borrowed_quantity . "</td>";
+                                                echo "<td><a href='BorrowerHistory.php?employee_id=" . $row["employee_id"] . "' class='btn btn-sm btn-primary'>View</a></td>";
+                                                echo "</tr>";
+                                            }
+                                        }
+                                        ?>
 
-                    </div><!--//inner-->
-                </div><!--//app-card-->
-                <div class="row g-4 mb-4">
-
-                    <div class="col col-lg-3" style="margin-right: 50px; margin-left: 100px">
-                    <div class="col-6 col-lg-3" style="width: 250px; margin-bottom: 50px">
-                        <div class="app-card app-card-stat shadow-sm h-100">
-                            <div class="app-card-body p-3 p-lg-4">
-                                <h4 class="stats-type mb-1">Number of Borrowers</h4>
-                                <div class="stats-figure">50</div>
-                                <!-- Include your data or dynamic content here -->
-                                <div class="stats-meta text-success">
-
-                                </div>
-                            </div><!--//app-card-body-->
-                            <a class="app-card-link-mask" href="#"></a>
-                        </div><!--//app-card-->
-                    </div><!--//col-->
-                    <div class="col-6 col-lg-3" style="width: 250px; margin-bottom: 50px">
-                        <div class="app-card app-card-stat shadow-sm h-100">
-                            <div class="app-card-body p-3 p-lg-4">
-                                <h4 class="stats-type mb-1">Departments</h4>
-                                <div class="stats-figure">10</div>
-                                <!-- Include your data or dynamic content here -->
-                                <div class="stats-meta text-success">
-
-                                </div>
-                            </div><!--//app-card-body-->
-                            <a class="app-card-link-mask" href="#"></a>
-                        </div><!--//app-card-->
-                    </div><!--//col-->
-                        <div class="col-6 col-lg-3" style="width: 250px;">
-                            <div class="app-card app-card-stat shadow-sm h-100">
-                                <div class="app-card-body p-3 p-lg-4">
-                                    <h4 class="stats-type mb-1">Employees</h4>
-                                    <div class="stats-figure">150</div>
-                                    <!-- Include your data or dynamic content here -->
-                                    <div class="stats-meta text-success">
-                                    </div>
-                                </div><!--//app-card-body-->
-                                <a class="app-card-link-mask" href="#"></a>
-                            </div><!--//app-card-->
-                        </div><!--//col-->
-                    </div>
-                    <div class="col-12 col-lg-6">
-                        <div class="app-card app-card-chart h-100 shadow-sm">
-                            <div class="app-card-header p-3">
-                                <div class="row justify-content-between align-items-center">
-                                    <div class="col-auto">
-                                        <h4 class="app-card-title">Statistics of Borrowers</h4>
-                                    </div><!--//col-->
-                                </div><!--//row-->
-                            </div><!--//app-card-header-->
-                            <div class="app-card-body p-3 p-lg-4">
-
-                                <div class="chart-container">
-                                    <canvas id="canvas-linechart" ></canvas>
-                                </div>
+                                        </tbody>
+                                    </table>
+                                </div><!--//table-responsive-->
                             </div><!--//app-card-body-->
                         </div><!--//app-card-->
-                    </div><!--//col-->
-                    <!-- Include similar code for other sections and statistics -->
-
-                </div><!--//row-->
-                <div class="row g-4 mb-4">
-
-                </div><!--//row-->
+                    </div><!--//tab-pane-->
+                    <!-- Additional tab panes for specific categories if needed -->
+                </div><!--//tab-content-->
 
             </div><!--//container-fluid-->
         </div><!--//app-content-->
 
 
     </div><!--//app-wrapper-->
+</div>
+<!-- Javascript -->
+<script src="../assets/js/popper.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<!-- Inside your JavaScript file or script tag -->
+<script>
 
-    </div>
-    <!-- Javascript -->
-    <script src="../assets/js/popper.min.js"></script>
-    <script src="../assets/js/bootstrap.min.js"></script>
-    <!-- Inside your JavaScript file or script tag -->
-    <script>
-        // Sample data for demonstration purposes
-        const employeesData = [
-            { id: 1, email: 'employee1@example.com', name: 'employee1', phone: '053-456-7890', rate: '4/5' },
-            { id: 2, email: 'employee2@example.com', name: 'employee2', phone: '057-654-3210', rate: '3/5' },
-            // Add more employee data as needed
-        ];
+ </script>
+<!-- Page Specific JS -->
+<script src="../assets/js/app.js"></script>
 
-        // Get the table body
-        const tableBody = document.querySelector('#employees-all tbody');
-
-        // Function to generate rows for employees
-        function generateEmployeeRows() {
-            // Clear existing rows
-            tableBody.innerHTML = '';
-
-            // Loop through each employee and create a row
-            employeesData.forEach(employee => {
-                const row = `
-            <tr>
-                <td class="cell">${employee.id}</td>
-                <td class="cell">${employee.email}</td>
-                <td class="cell">${employee.name}</td>
-                <td class="cell">${employee.phone}</td>
-                <td class="cell">${employee.rate}</td>
-                <td class="cell">
-                    <!-- Add buttons or actions for each employee -->
-                     <button class="btn btn-sm btn-danger" style="color: #FFF7F5">block</button>
-                </td>
-            </tr>
-        `;
-                // Append the row to the table body
-                tableBody.insertAdjacentHTML('beforeend', row);
-            });
-        }
-
-        // Call the function to generate rows initially
-        generateEmployeeRows();
-    </script>
-
-    <script src="../assets/js/popper.min.js"></script>
-    <script src="../assets/js/bootstrap.min.js"></script>
-
-    <!-- Charts JS -->
-    <script src="../assets/js/chart.min.js"></script>
-    <script src="../assets/js/index-charts.js"></script>
-    <!-- Page Specific JS -->
-    <script src="../assets/js/app.js"></script>
+<!-- Javascript -->
+<script src="../assets/js/popper.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<!-- Inside your JavaScript file or script tag -->
+<!-- Page Specific JS -->
+<script src="../assets/js/app.js"></script>
 
 </body>
 </html>

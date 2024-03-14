@@ -1,3 +1,16 @@
+
+<?php
+include "../../action/config.php";
+
+// get employee id
+if (isset($_GET['employee_id'])) {
+    $employeeId = $_GET['employee_id'];
+} else {
+    // redirect to employee management page
+    header('Location: BorrowerManagement.php');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +37,6 @@
     <div class="container-fluid py-2">
       <div class="app-header-content">
         <div class="row justify-content-center align-items-center" style="font-size: 20px; font-weight: bold">
-
         </div>
         <div class="row justify-content-between align-items-center">
 
@@ -36,7 +48,6 @@
           <div class="search-mobile-trigger d-sm-none col">
             <i class="search-mobile-trigger-icon fa-solid fa-magnifying-glass"></i>
           </div><!--//col-->
-
         </div><!--//row-->
       </div><!--//app-header-content-->
     </div><!--//container-fluid-->
@@ -53,7 +64,7 @@
         <ul class="app-menu list-unstyled accordion" id="menu-accordion">
           <li class="nav-item">
             <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="index.php">
 						        <span class="nav-icon">
 						        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 		  <path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z"/>
@@ -65,7 +76,7 @@
           </li><!--//nav-item-->
           <li class="nav-item">
             <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-            <a class="nav-link active" href="BorrowerManagement.html">
+            <a class="nav-link active" href="BorrowerManagement.php">
 						        <span class="nav-icon">
 						       <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-people" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                   <path fill-rule="evenodd" d="M12.5 10.5a2 2 0 1 0-3.999-.001A2 2 0 0 0 12.5 10.5zm-7 0a2 2 0 1 0-3.999-.001A2 2 0 0 0 5.5 10.5zm5-7a3 3 0 1 1-5.999-.001A3 3 0 0 1 10.5 3.5z"/>
@@ -87,8 +98,8 @@
             </a><!--//nav-link-->
             <div id="submenu-1" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
               <ul class="submenu-list list-unstyled">
-                <li class="submenu-item"><a class="submenu-link" href="EmployeeMangement.html">Show Employees</a></li>
-                <li class="submenu-item"><a class="submenu-link" href="AddEmployee.html">Add Employee</a></li>
+                <li class="submenu-item"><a class="submenu-link" href="EmployeeMangement.php">Show Employees</a></li>
+                <li class="submenu-item"><a class="submenu-link" href="AddEmployee.php">Add Employee</a></li>
 <!--
                 <li class="submenu-item"><a class="submenu-link" href="SendNotification.html">Send Notification</a></li>
 -->
@@ -110,8 +121,8 @@
             </a><!--//nav-link-->
             <div id="submenu-2" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
               <ul class="submenu-list list-unstyled">
-                <li class="submenu-item"><a class="submenu-link active" href="DepartmentManagement.html">Show Department</a></li>
-                <li class="submenu-item"><a class="submenu-link" href="AddDepartment.html">Add Department</a></li>
+                <li class="submenu-item"><a class="submenu-link active" href="DepartmentManagement.php">Show Department</a></li>
+                <li class="submenu-item"><a class="submenu-link" href="AddDepartment.php">Add Department</a></li>
               </ul>
             </div>
           </li><!--//nav-item-->
@@ -148,22 +159,78 @@
             <div class="app-card app-card-borrow-history-table shadow-sm mb-5">
               <div class="app-card-body">
                 <div class="table-responsive">
-                  <table class="table app-table-hover mb-0 text-left">
-                    <thead>
-                    <tr>
-                      <th class="cell">ID</th>
-                      <th class="cell">Name of Equipment</th>
-                      <th class="cell">Borrow Date</th>
-                      <th class="cell">Return Date</th>
-                      <th class="cell" style="width: 300px; text-overflow-ellipsis: ellipsis;">Note</th>
-                      <th class="cell">Rate</th>
-                      <th class="cell">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody id="borrow-history-table-body">
-                    <!-- Borrow history data rows will be populated dynamically -->
-                    </tbody>
-                  </table>
+                    <table class="table app-table-hover mb-0 text-left">
+                        <thead>
+                        <tr>
+                            <th class="cell">ID</th>
+                            <th class="cell">Name of Equipment</th>
+                            <th class="cell">Borrow Date</th>
+                            <th class="cell">Return Date</th>
+                            <th class="cell" style="width: 300px; text-overflow-ellipsis: ellipsis;">Note</th>
+                            <th class="cell">Rate</th>
+                            <th class="cell">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody id="borrow-history-table-body">
+                        <?php
+                        $sql = "SELECT * FROM requests WHERE employee_id = $employeeId";
+                        $result = $conn->query($sql);
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                $id = $row['request_id'];
+                                $equipmentId = $row['equipment_id'];
+                                $borrowDate = $row['date'];
+                                $returnDate = $row['return_date'];
+
+                                $equipmentQuery = "SELECT * FROM equipment WHERE equipment_id = $equipmentId";
+                                $equipmentResult = $conn->query($equipmentQuery);
+
+                                $rateQuery = "SELECT * FROM rate WHERE equipment_id = $equipmentId";
+                                $rateResult = $conn->query($rateQuery);
+
+                                if ($equipmentResult->num_rows > 0 && $rateResult->num_rows > 0) {
+                                    $equipmentRow = $equipmentResult->fetch_assoc();
+                                    $name = $equipmentRow['name'];
+
+                                    $rateRow = $rateResult->fetch_assoc();
+                                    $note = $rateRow['note'];
+                                    $rate = $rateRow['number'];
+                                } else {
+                                    $name = "N/A";
+                                    $note = "N/A";
+                                    $rate = 0;
+                                }
+                                ?>
+                                <tr>
+                                    <td><?php echo $id ?></td>
+                                    <td><?php echo $name ?></td>
+                                    <td><?php echo $borrowDate ?></td>
+                                    <td><?php echo $returnDate ?></td>
+                                    <td><?php echo $note ?></td>
+                                    <td class="cell" data-title="Rate">
+                                        <?php
+                                        // Display rate as stars
+                                        for ($i = 1; $i <= $rate; $i++) {
+                                            echo '<i class="fas fa-star text-warning"></i>';
+                                        }
+                                        for ($i = $rate + 1; $i <= 5; $i++) {
+                                            echo '<i class="far fa-star text-warning"></i>';
+                                        }
+                                        ?>
+                                    </td>
+                                    <td class="cell">
+                                        <button class="btn btn-sm btn-primary" onclick="showNotificationModal()">Send Notification</button>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                        } else {
+                            echo "<tr><td colspan='7'>No data found</td></tr>";
+                        }
+                        ?>
+                        </tbody>
+                    </table>
+
                 </div><!--//table-responsive-->
               </div><!--//app-card-body-->
             </div><!--//app-card-->
@@ -220,62 +287,45 @@
 <script src="../assets/js/bootstrap.min.js"></script>
 <!-- Inside your JavaScript file or script tag -->
 <script>
-  // Sample data for borrower history
-  const borrowHistoryData = [
-    { id: 1, equipmentName: 'Laptop', borrowDate: '2024-01-20', returnDate: '2024-01-25',   note:'no problems' ,rate: '4' },
-    { id: 2, equipmentName: 'Projector', borrowDate: '2024-01-22', returnDate: '2024-01-27',note:'bad employees' ,rate: '1' },
-    // Add more borrower history data as needed
-  ];
-  const borrowHistoryTableBody = document.getElementById('borrow-history-table-body');
-
-  // Function to generate rows for borrower history
-  function generateBorrowHistoryRows() {
-    borrowHistoryTableBody.innerHTML = '';
-    borrowHistoryData.forEach(history => {
-      const rate = `<div  class="rating-body">
-                    <div class="rating-stars">
-                         <label for="star5" class="${history.rate >=1 ? 'filled' : ''}" title="5 stars">&#9733;</label>
-                         <label for="star4" class="${history.rate >= 2 ? 'filled' : ''}" title="4 stars">&#9733;</label>
-                         <label for="star3" class="${history.rate >= 3 ? 'filled' : ''}" title="3 stars">&#9733;</label>
-                         <label for="star2" class="${history.rate >= 4 ? 'filled' : ''}" title="2 stars">&#9733;</label>
-                         <label for="star1" class="${history.rate >= 5 ? 'filled' : ''}" title="1 star">&#9733;</label>
-                    </div>
-                 </div>`;
 
 
-      const row = `
-            <tr>
-                <td class="cell">${history.id}</td>
-                <td class="cell">${history.equipmentName}</td>
-                <td class="cell">${history.borrowDate}</td>
-                <td class="cell">${history.returnDate}</td>
-                <td class="cell"  style="text-overflow-ellipsis: ellipsis; height: 50px" >${history.note}</td>
-                <td class="cell">
-                  <div  class="rating-body">
-                   ${rate}
-                 </div></td>
-                <td class="cell">
-                    <button class="btn btn-sm btn-primary" onclick="showNotificationModal()">Send Notification</button>
-                </td>
-            </tr>
-        `;
-      borrowHistoryTableBody.insertAdjacentHTML('beforeend', row);
-    });
-  }
-  // Function to send notification to borrower
+    // get status from URL parameter
+    var urlParams = new URLSearchParams(window.location.search);
+    var status = urlParams.get('status');
+    // check if status is returned
+    if (status=='success') {
+        // show success message
+        alert('Notification sent successfully!');
+    } else if (status=='error') {
+        // show error message
+        alert('Error sending notification. Please try again.');
+    }
+
+    // Function to send notification to borrower
 
   function  showNotificationModal() {
     $('#sendNotificationModal').modal('show');
   }
+
+  // function to get title	description	date	admin_id	employee_id and send it to sendNotification  action php file
+
+
+
   function closeNotificationModal() {
     $('#sendNotificationModal').modal('hide');
   }
-  function sendNotification(historyId) {
-
+  function sendNotification() {
+    // send notification to sendNotification action php file
+    // get title	admin_id	employee_id from borrowerHistory table
+      // get text from textarea id notes
+      var notes = document.getElementById('notes').value;
+      // get employee_id from URL parameter
+      var urlParams = new URLSearchParams(window.location.search);
+      var employee_id = urlParams.get('employee_id');
+      location.href = 'actions/sendNotification.php?title='+notes+'&employee_id='+employee_id;
   }
   // Call the function to generate borrower history rows initially
-  generateBorrowHistoryRows();
-</script>
+ </script>
 <!-- Page Specific JS -->
 <script src="../assets/js/app.js"></script>
 

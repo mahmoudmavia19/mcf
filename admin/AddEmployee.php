@@ -1,3 +1,7 @@
+<?php
+include "../../action/config.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,7 +57,7 @@
                 <ul class="app-menu list-unstyled accordion" id="menu-accordion">
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link " href="index.php">
 						        <span class="nav-icon">
 						        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 		  <path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z"/>
@@ -65,7 +69,7 @@
                     </li><!--//nav-item-->
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link" href="BorrowerManagement.html">
+                        <a class="nav-link" href="BorrowerManagement.php">
 						        <span class="nav-icon">
 						       <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-people" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                   <path fill-rule="evenodd" d="M12.5 10.5a2 2 0 1 0-3.999-.001A2 2 0 0 0 12.5 10.5zm-7 0a2 2 0 1 0-3.999-.001A2 2 0 0 0 5.5 10.5zm5-7a3 3 0 1 1-5.999-.001A3 3 0 0 1 10.5 3.5z"/>
@@ -77,7 +81,7 @@
                     </li><!--//nav-item-->
 
                     <li class="nav-item has-submenu">
-                        <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
+                        <a class="nav-link submenu-toggle active" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
 						        <span class="nav-icon">
 						             <i class="fas fa-users"></i>
 						         </span>
@@ -88,17 +92,17 @@
                         </a><!--//nav-link-->
                         <div id="submenu-1" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
                             <ul class="submenu-list list-unstyled">
-                                <li class="submenu-item"><a class="submenu-link" href="EmployeeMangement.html">Show Employees</a></li>
-                                <li class="submenu-item"><a class="submenu-link" href="AddEmployee.html">Add Employee</a></li>
-<!--
-                                <li class="submenu-item"><a class="submenu-link" href="SendNotification.html">Send Notification</a></li>
--->
+                                <li class="submenu-item"><a class="submenu-link" href="EmployeeMangement.php">Show Employees</a></li>
+                                <li class="submenu-item"><a class="submenu-link active" href="AddEmployee.php">Add Employee</a></li>
+                                <!--
+                                                                <li class="submenu-item"><a class="submenu-link" href="SendNotification.html">Send Notification</a></li>
+                                -->
 
                             </ul>
                         </div>
                     </li><!--//nav-item-->
                     <li class="nav-item has-submenu">
-                        <a class="nav-link submenu-toggle active " href="#" data-bs-toggle="collapse" data-bs-target="#submenu-2" aria-expanded="false" aria-controls="submenu-2">
+                        <a class="nav-link submenu-toggle " href="#" data-bs-toggle="collapse" data-bs-target="#submenu-2" aria-expanded="false" aria-controls="submenu-2">
 						        <span class="nav-icon">
 						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
 						            <i class="fas fa-building"></i>
@@ -111,8 +115,8 @@
                         </a><!--//nav-link-->
                         <div id="submenu-2" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
                             <ul class="submenu-list list-unstyled">
-                                <li class="submenu-item"><a class="submenu-link" href="DepartmentManagement.html">Show Department</a></li>
-                                <li class="submenu-item " ><a class="submenu-link active" href="AddDepartment.html">Add Department</a></li>
+                                <li class="submenu-item"><a class="submenu-link" href="DepartmentManagement.php">Show Department</a></li>
+                                <li class="submenu-item"><a class="submenu-link" href="AddDepartment.php">Add Department</a></li>
                             </ul>
                         </div>
                     </li><!--//nav-item-->
@@ -131,6 +135,7 @@
     </div><!--//app-sidepanel-->
 </header><!--//app-header-->
 
+
 <div class="app-wrapper">
 
     <div class="app-content pt-3 p-md-3 p-lg-4">
@@ -138,23 +143,55 @@
 
             <div class="row g-3 mb-4 align-items-center justify-content-between">
                 <div class="col-auto">
-                    <h1 class="app-page-title mb-0">Department</h1>
+                    <h1 class="app-page-title mb-0">Employees</h1>
                 </div>
 
                 <div class="app-card-body">
-                    <form class="department-form">
+                    <form class="employee-form" action="actions/addEmployee.php" method="POST">
                         <div class="mb-3">
-                            <label for="department-input-name" class="form-label">Department Name</label>
-                            <input type="text" class="form-control" id="department-input-name" value="" required>
+                            <label for="employee-input-name" class="form-label">Employee Name</label>
+                            <input type="text" name="name" class="form-control" id="employee-input-name" value="" required>
                         </div>
                         <div class="mb-3">
-                            <label for="department-input-description" class="form-label">Department Description</label>
-                            <textarea class="form-control" id="department-input-description" rows="3"></textarea>
+                            <label for="employee-input-email" class="form-label">Employee Email Address</label>
+                            <input type="email" name="email" class="form-control" id="employee-input-email" value="">
                         </div>
-                        <button type="submit" onclick="confirm('Are you sure?')" class="btn app-btn-primary">Add Department</button>
+                        <div class="mb-3">
+                            <label for="employee-input-phone" class="form-label">Phone Number</label>
+                            <input type="tel" name="phone" class="form-control" id="employee-input-phone" value="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="employee-input-department" class="form-label">Department</label>
+                            <select class="form-select" name="department_id" id="employee-input-department">
+                                <option selected>Select Department</option>
+                                <?php
+                                $sql = "SELECT * FROM department";
+                                $result = $conn->query($sql);
+                                if ($result->num_rows > 0) {
+                                    // output data of each row
+                                    while($row = $result->fetch_assoc()) {
+                                        echo "<option value=".$row['id'].">".$row['name']."</option>";
+                                    }
+                                }
+                                ?>
+                                <!-- Add more departments as needed -->
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="employee-input-password" class="form-label">Password</label>
+                            <input type="tel" name="password" class="form-control" id="employee-input-password" value="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="employee-input-cpassword" class="form-label">Confirm Password</label>
+                            <input type="tel" name="cpassword" class="form-control" id="employee-input-cpassword" value="">
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" name="role" class="form-check-input" id="equipment-officer">
+                            <label class="form-check-label" for="equipment-officer">Equipment Officer</label>
+                        </div>
+                        <button type="submit" onclick="return confirm('Are you sure?')" class="btn app-btn-primary">Add Employee</button>
                     </form>
                 </div>
-
 
 
             </div><!--//container-fluid-->
@@ -162,14 +199,45 @@
 
 
     </div><!--//app-wrapper-->
-</div>
-    <!-- Javascript -->
-    <script src="../assets/js/popper.min.js"></script>
-    <script src="../assets/js/bootstrap.min.js"></script>
-    <!-- Inside your JavaScript file or script tag -->
 
-    <!-- Page Specific JS -->
-    <script src="../assets/js/app.js"></script>
+</div>
+
+<!-- Javascript -->
+<script src="../assets/js/popper.min.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<!-- Inside your JavaScript file or script tag -->
+
+<!-- Page Specific JS -->
+<script src="../assets/js/app.js"></script>
+<script>
+    // get status parameter from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
+    // show success or error message
+    if (status === 'success') {
+        alert('Employee added successfully!');
+    }else {
+        // check if status is  database_error , password_mismatch , invalid_phone , password_too_short , invalid_email
+        if(status === 'database_error'){
+            alert('Error adding employee. Please try again later.');
+        } else if(status === 'password_mismatch'){
+            alert('Passwords do not match. Please try again.');
+            // back to previous page
+            window.history.back();
+        } else if(status === 'invalid_phone'){
+            alert('Invalid phone number. Please try again.');
+            window.history.back();
+        } else if(status === 'password_too_short'){
+            alert('Password is too short. Please try again.');
+        } else if(status === 'invalid_email'){
+            alert('Invalid email address. Please try again.');
+            window.history.back();
+        } else {
+           /* alert('Error adding employee. Please try again later.');
+            window.history.back();*/
+        }
+    }
+</script>
 
 </body>
 </html>

@@ -1,3 +1,12 @@
+<?php
+session_start() ;
+$officer_id = $_SESSION['id'];
+ if(isset($_GET['message'])) {
+    $message = $_GET['message'];
+    echo "<script type='text/javascript'>alert('$message');</script>";
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,7 +62,7 @@
                 <ul class="app-menu list-unstyled accordion" id="menu-accordion">
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link " href="index.html">
+                        <a class="nav-link " href="index.php">
 						        <span class="nav-icon">
                                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAuklEQVR4nO2VQQrCMBBF38oDtMvqUq9qPIqI3eiRjG4UpBcYUaZQQmoaYoKLfvgQksn8zM+QQBgboAU6QBx2wBFYk4gl8PAIiMM70KQIHTTRaSRRA5w1Zp8i1Nv17bQrjXmmCPXW/CquDBbADrhOuPRYWsCoxmcgmWnIVIk4vDGyUKmtdUSyKrCnHCSgPrWiIbzrvsl3+bHW1YE92RtBZiGZrcNpBlug4y6lHtUt+oSbTJXZ4Tcx47/xAjWhiVrWemq0AAAAAElFTkSuQmCC">
  						         </span>
@@ -71,7 +80,7 @@
                     </li><!--//nav-item-->
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link" href="requests.html">
+                        <a class="nav-link" href="requests.php">
 						        <span class="nav-icon">
                                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAABS0lEQVR4nO2aQU7CQBRA3yGkC04kcWfwKuJW4HoIZxAPIOiGDZgm04QMHWgTo/h9L/mb9i/6/3Sm7euASBsVMAeWwGeKF2CWzoXmAdgCh0LU58YELn5/pvgm9hGbUF0Y+Tw2wIBAzLMCd8AjMEwxSceOc6YEYpUVVxecM8ly6oWxxB3w1uOO+qlYA6O2C95mifWo5wxbFsQS6ysothSv39WATaQGLDtMgaceU2B0pU2oi79tu+BZlrhLTTi3CD7zjx+D78ANwRj3eBG6JyjjtLidG/mwxTcM0kvOAvhIsUhzPtxtLyIiIiJHqMUpfwuoxVGL0+gwtTiBWHVwgmpxThfEEn/OCm+zJLU4p6jFUYujFkctjlpcRERERIJSuVsctfjhwiYpd4ujFkctThl3i/P7+lstTo//AssOf4bU4qjFUYujFkctLkIIvgDF1UoaBg7GAAAAAABJRU5ErkJggg==">
  						         </span>
@@ -111,32 +120,32 @@
                      <h1 class="app-page-title mb-0">Equipment</h1>
                  </div>
                  <div class="app-card-body">
-                     <form class="equipment-form">
+                     <form class="equipment-form" action="actions/add_equipment.php" method="POST">
                          <div class="mb-3">
                              <label for="equipment-input-id" class="form-label">Equipment ID</label>
-                             <input type="number" class="form-control" id="equipment-input-id" value="" required>
+                             <input type="number" name="equipment_id" class="form-control" id="equipment-input-id" value="" required>
                          </div>
                          <div class="mb-3">
                              <label for="equipment-input-name" class="form-label">Equipment Name</label>
-                             <input type="text" class="form-control" id="equipment-input-name" value="" required>
+                             <input type="text" class="form-control" name="name" id="equipment-input-name" value="" required>
                          </div>
                          <div class="mb-3">
                              <label for="equipment-input-description" class="form-label">Description</label>
-                             <input type="text" class="form-control" id="equipment-input-description" value="">
+                             <input type="text" class="form-control" name="description" id="equipment-input-description" value="">
                          </div>
                          <div class="mb-3">
                              <label for="equipment-input-quantity" class="form-label">Quantity</label>
-                             <input type="number" class="form-control" id="equipment-input-quantity" value="">
+                             <input type="number"  name="quantity" class="form-control" id="equipment-input-quantity" value="">
                          </div>
                          <div class="mb-3">
                              <label for="equipment-input-availability" class="form-label">Availability</label>
-                             <select class="form-select" id="equipment-input-availability">
+                             <select class="form-select" name="availability" id="equipment-input-availability">
                                  <option selected>Select Availability</option>
-                                 <option value="available">Available</option>
-                                 <option value="unavailable">Unavailable</option>
+                                 <option value="1">Available</option>
+                                 <option value="0">Unavailable</option>
                              </select>
                          </div>
-                         <button style="margin-bottom: 20px" type="submit" onclick="AddNewEquipment()" class="btn app-btn-primary">Add Employee</button>
+                         <button onclick="return confirm('Are you sure you want to Add the Equipment?')" style="margin-bottom: 20px" type="submit" class="btn app-btn-primary">Add Employee</button>
                      </form>
                  </div>
              </div>

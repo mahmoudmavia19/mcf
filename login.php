@@ -129,7 +129,7 @@
                      //   successAction(response.userType);
                         // print user type in console
                         if(userTypeSelect.value === response.userType){
-                            successAction(response.userType);
+                            successAction(response.userType,response.id);
                         }
                         else  {
                             displayValidationMessage('Invalid User Type', 'error');
@@ -145,13 +145,13 @@
         });
     });
 
-    function successAction(userType) {
+    function successAction(userType,id) {
         if (userType === 'admin') {
             window.location.href = 'admin/';
         } else if (userType === 'employee') {
             window.location.href = 'employee/';
         } else if (userType === 'officer') {
-            window.location.href = 'EquipmentOfficer/';
+            window.location.href = 'EquipmentOfficer/index.php?id='+id;
         }
     }
 

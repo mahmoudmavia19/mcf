@@ -1,7 +1,10 @@
+<?php
+include '../action/config.php' ;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Employee Management | MCF</title>
+    <title>Overview | MCF</title>
 
     <!-- Meta -->
     <meta charset="utf-8">
@@ -19,6 +22,8 @@
 </head>
 
 <body class="app">
+
+
 <header class="app-header fixed-top">
     <div class="app-header-inner">
         <div class="container-fluid py-2">
@@ -53,7 +58,7 @@
                 <ul class="app-menu list-unstyled accordion" id="menu-accordion">
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link " href="index.html">
+                        <a class="nav-link active" href="index.html">
 						        <span class="nav-icon">
 						        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 		  <path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z"/>
@@ -65,7 +70,7 @@
                     </li><!--//nav-item-->
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link" href="BorrowerManagement.html">
+                        <a class="nav-link" href="BorrowerManagement.php">
 						        <span class="nav-icon">
 						       <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-people" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                   <path fill-rule="evenodd" d="M12.5 10.5a2 2 0 1 0-3.999-.001A2 2 0 0 0 12.5 10.5zm-7 0a2 2 0 1 0-3.999-.001A2 2 0 0 0 5.5 10.5zm5-7a3 3 0 1 1-5.999-.001A3 3 0 0 1 10.5 3.5z"/>
@@ -75,9 +80,8 @@
                             <span class="nav-link-text">Borrowers Management</span>
                         </a><!--//nav-link-->
                     </li><!--//nav-item-->
-
                     <li class="nav-item has-submenu">
-                        <a class="nav-link submenu-toggle active" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
+                        <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
 						        <span class="nav-icon">
 						             <i class="fas fa-users"></i>
 						         </span>
@@ -88,8 +92,8 @@
                         </a><!--//nav-link-->
                         <div id="submenu-1" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
                             <ul class="submenu-list list-unstyled">
-                                <li class="submenu-item"><a class="submenu-link" href="EmployeeMangement.html">Show Employees</a></li>
-                                <li class="submenu-item"><a class="submenu-link active" href="AddEmployee.html">Add Employee</a></li>
+                                <li class="submenu-item"><a class="submenu-link" href="EmployeeMangement.php">Show Employees</a></li>
+                                <li class="submenu-item"><a class="submenu-link" href="AddEmployee.php">Add Employee</a></li>
 <!--
                                 <li class="submenu-item"><a class="submenu-link" href="SendNotification.html">Send Notification</a></li>
 -->
@@ -111,8 +115,8 @@
                         </a><!--//nav-link-->
                         <div id="submenu-2" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
                             <ul class="submenu-list list-unstyled">
-                                <li class="submenu-item"><a class="submenu-link" href="DepartmentManagement.html">Show Department</a></li>
-                                <li class="submenu-item"><a class="submenu-link" href="AddDepartment.html">Add Department</a></li>
+                                <li class="submenu-item"><a class="submenu-link" href="DepartmentManagement.php">Show Department</a></li>
+                                <li class="submenu-item"><a class="submenu-link" href="AddDepartment.php">Add Department</a></li>
                             </ul>
                         </div>
                     </li><!--//nav-item-->
@@ -131,7 +135,6 @@
     </div><!--//app-sidepanel-->
 </header><!--//app-header-->
 
-
 <div class="app-wrapper">
 
     <div class="app-content pt-3 p-md-3 p-lg-4">
@@ -139,49 +142,107 @@
 
             <div class="row g-3 mb-4 align-items-center justify-content-between">
                 <div class="col-auto">
-                    <h1 class="app-page-title mb-0">Employees</h1>
+                    <h1 class="app-page-title mb-0">Overview</h1>
                 </div>
+                <div class="app-card alert alert-dismissible shadow-sm mb-4 border-left-decoration" role="alert">
+                    <div class="inner">
+                        <div class="app-card-body p-3 p-lg-4">
+                            <h3 class="mb-3">Welcome, Admin!</h3>
+                            <div class="row gx-5 gy-3">
+                                <div class="col-12 col-lg-9">
 
-                <div class="app-card-body">
-                    <form class="employee-form">
-                        <div class="mb-3">
-                            <label for="employee-input-name" class="form-label">Employee Name</label>
-                            <input type="text" class="form-control" id="employee-input-name" value="" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="employee-input-email" class="form-label">Employee Email Address</label>
-                            <input type="email" class="form-control" id="employee-input-email" value="">
-                        </div>
-                        <div class="mb-3">
-                            <label for="employee-input-phone" class="form-label">Phone Number</label>
-                            <input type="tel" class="form-control" id="employee-input-phone" value="">
-                        </div>
-                        <div class="mb-3">
-                            <label for="employee-input-department" class="form-label">Department</label>
-                            <select class="form-select" id="employee-input-department">
-                                <option selected>Select Department</option>
-                                <option value="1">Human Resources</option>
-                                <option value="2">Finance</option>
-                                <option value="3">Marketing</option>
-                                <!-- Add more departments as needed -->
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="employee-input-password" class="form-label">Password</label>
-                            <input type="tel" class="form-control" id="employee-input-password" value="">
-                        </div>
-                        <div class="mb-3">
-                            <label for="employee-input-cpassword" class="form-label">Confirm Password</label>
-                            <input type="tel" class="form-control" id="employee-input-cpassword" value="">
-                        </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="equipment-officer">
-                            <label class="form-check-label" for="equipment-officer">Equipment Officer</label>
-                        </div>
-                        <button type="submit" onclick="confirm('Are you sure?')" class="btn app-btn-primary">Add Employee</button>
-                    </form>
-                </div>
+                                </div><!--//col-->
+                            </div><!--//row-->
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div><!--//app-card-body-->
 
+                    </div><!--//inner-->
+                </div><!--//app-card-->
+                <div class="row g-4 mb-4">
+                    <div class="col col-lg-3" style="margin-right: 50px; margin-left: 100px">
+                    <div class="col-6 col-lg-3" style="width: 250px; margin-bottom: 50px">
+                        <div class="app-card app-card-stat shadow-sm h-100">
+                            <div class="app-card-body p-3 p-lg-4">
+                                <h4 class="stats-type mb-1">Number of Borrowers</h4>
+                                <div class="stats-figure">
+                                    <?php
+                                    // get count of borrower from table request remove dublicate employee_d
+                                    $sql = "SELECT COUNT(DISTINCT employee_id) as count FROM requests";
+                                    $result = $conn->query($sql);
+                                    echo $result->fetch_assoc()['count'];
+                                    ?>
+                                </div>
+                                <!-- Include your data or dynamic content here -->
+                                <div class="stats-meta text-success">
+
+                                </div>
+                            </div><!--//app-card-body-->
+                            <a class="app-card-link-mask" href="#"></a>
+                        </div><!--//app-card-->
+                    </div><!--//col-->
+                    <div class="col-6 col-lg-3" style="width: 250px; margin-bottom: 50px">
+                        <div class="app-card app-card-stat shadow-sm h-100">
+                            <div class="app-card-body p-3 p-lg-4">
+                                <h4 class="stats-type mb-1">Departments</h4>
+                                <div class="stats-figure">
+                                    <?php
+                                    // get count of department
+                                    $sql = "SELECT COUNT(*) as count FROM department";
+                                    $result = $conn->query($sql);
+                                    echo $result->fetch_assoc()['count'];
+                                    ?>
+                                </div>
+                                <!-- Include your data or dynamic content here -->
+                                <div class="stats-meta text-success">
+
+                                </div>
+                            </div><!--//app-card-body-->
+                            <a class="app-card-link-mask" href="#"></a>
+                        </div><!--//app-card-->
+                    </div><!--//col-->
+                        <div class="col-6 col-lg-3" style="width: 250px;">
+                            <div class="app-card app-card-stat shadow-sm h-100">
+                                <div class="app-card-body p-3 p-lg-4">
+                                    <h4 class="stats-type mb-1">Employees</h4>
+                                    <div class="stats-figure">
+                                        <?php
+                                        // get count of employee
+                                        $sql = "SELECT COUNT(*) as count FROM employee";
+                                        $result = $conn->query($sql);
+                                        echo $result->fetch_assoc()['count'];
+                                        ?>
+                                    </div>
+                                    <!-- Include your data or dynamic content here -->
+                                    <div class="stats-meta text-success">
+                                    </div>
+                                </div><!--//app-card-body-->
+                                <a class="app-card-link-mask" href="#"></a>
+                            </div><!--//app-card-->
+                        </div><!--//col-->
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <div class="app-card app-card-chart h-100 shadow-sm">
+                            <div class="app-card-header p-3">
+                                <div class="row justify-content-between align-items-center">
+                                    <div class="col-auto">
+                                        <h4 class="app-card-title">Statistics of Borrowers</h4>
+                                    </div><!--//col-->
+                                </div><!--//row-->
+                            </div><!--//app-card-header-->
+                            <div class="app-card-body p-3 p-lg-4">
+
+                                <div class="chart-container">
+                                    <canvas id="canvas-linechart" ></canvas>
+                                </div>
+                            </div><!--//app-card-body-->
+                        </div><!--//app-card-->
+                    </div><!--//col-->
+                    <!-- Include similar code for other sections and statistics -->
+
+                </div><!--//row-->
+                <div class="row g-4 mb-4">
+
+                </div><!--//row-->
 
             </div><!--//container-fluid-->
         </div><!--//app-content-->
@@ -190,12 +251,17 @@
     </div><!--//app-wrapper-->
 
     </div>
-
     <!-- Javascript -->
     <script src="../assets/js/popper.min.js"></script>
     <script src="../assets/js/bootstrap.min.js"></script>
     <!-- Inside your JavaScript file or script tag -->
 
+    <script src="../assets/js/popper.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+
+    <!-- Charts JS -->
+    <script src="../assets/js/chart.min.js"></script>
+    <script src="../assets/js/index-charts.js"></script>
     <!-- Page Specific JS -->
     <script src="../assets/js/app.js"></script>
 

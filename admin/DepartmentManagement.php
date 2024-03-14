@@ -1,3 +1,10 @@
+<?php
+include "../../action/config.php";
+$sql = "SELECT id, name, description, create_time FROM department";
+$result = $conn->query($sql);
+$departmentsData = array();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,7 +60,7 @@
                 <ul class="app-menu list-unstyled accordion" id="menu-accordion">
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="index.php">
 						        <span class="nav-icon">
 						        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 		  <path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z"/>
@@ -65,7 +72,7 @@
                     </li><!--//nav-item-->
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link" href="BorrowerManagement.html">
+                        <a class="nav-link" href="BorrowerManagement.php">
 						        <span class="nav-icon">
 						       <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-people" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                   <path fill-rule="evenodd" d="M12.5 10.5a2 2 0 1 0-3.999-.001A2 2 0 0 0 12.5 10.5zm-7 0a2 2 0 1 0-3.999-.001A2 2 0 0 0 5.5 10.5zm5-7a3 3 0 1 1-5.999-.001A3 3 0 0 1 10.5 3.5z"/>
@@ -88,12 +95,11 @@
                         </a><!--//nav-link-->
                         <div id="submenu-1" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
                             <ul class="submenu-list list-unstyled">
-                                <li class="submenu-item"><a class="submenu-link" href="EmployeeMangement.html">Show Employees</a></li>
-                                <li class="submenu-item"><a class="submenu-link" href="AddEmployee.html">Add Employee</a></li>
+                                <li class="submenu-item"><a class="submenu-link" href="EmployeeMangement.php">Show Employees</a></li>
+                                <li class="submenu-item"><a class="submenu-link" href="AddEmployee.php">Add Employee</a></li>
 <!--
                                 <li class="submenu-item"><a class="submenu-link" href="SendNotification.html">Send Notification</a></li>
 -->
-
                             </ul>
                         </div>
                     </li><!--//nav-item-->
@@ -102,7 +108,6 @@
 						        <span class="nav-icon">
 						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
 						            <i class="fas fa-building"></i>
-
 						         </span>
                             <span class="nav-link-text">Department Management</span>
                             <span class="submenu-arrow">
@@ -111,8 +116,8 @@
                         </a><!--//nav-link-->
                         <div id="submenu-2" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
                             <ul class="submenu-list list-unstyled">
-                                <li class="submenu-item"><a class="submenu-link active" href="DepartmentManagement.html">Show Department</a></li>
-                                <li class="submenu-item"><a class="submenu-link" href="AddDepartment.html">Add Department</a></li>
+                                <li class="submenu-item"><a class="submenu-link active" href="DepartmentManagement.php">Show Department</a></li>
+                                <li class="submenu-item"><a class="submenu-link" href="AddDepartment.php">Add Department</a></li>
                             </ul>
                         </div>
                     </li><!--//nav-item-->
@@ -159,7 +164,26 @@
                                         </tr>
                                         </thead>
                                         <tbody id="departments-table-body">
-                                        <!-- Department data rows will be populated dynamically -->
+                                        <?php
+                                        if ($result->num_rows > 0) {
+                                        // Fetch associative array
+                                        while ($row = $result->fetch_assoc()) {
+                                        $id = $row['id'];
+                                        $name = $row['name'];
+                                        $description = $row['description'];
+                                        $createTime = $row['create_time'];
+                                        ?>
+                                        <tr>
+                                            <td class="cell"><span class="truncate"><?php echo $id ?></span></td>
+                                            <td class="cell"><span class="truncate"><?php echo $name ?></span></td>
+                                            <td class="cell"><span class="truncate"><?php echo $description ?></span></td>
+                                            <td class="cell"><span class="truncate"><?php echo $createTime ?></span></td>
+                                            <td class="cell">
+                                                <a class="btn btn-sm btn-danger"
+                                                   href="actions/delete_department.php?id=<?php echo $id ?>"
+                                                   style="color: #FFF7F5" onclick="return confirm('Are you sure you want to delete this department?')">Delete</a>
+                                            </td>
+                                           <?php } }else { echo "0 results";}?>
                                         </tbody>
                                     </table>
                                 </div><!--//table-responsive-->
@@ -179,31 +203,15 @@
     <script src="../assets/js/bootstrap.min.js"></script>
     <!-- Inside your JavaScript file or script tag -->
     <script>
-        // Sample data for departments
-        const departmentsData = [
-            { id: 1, title: 'Department 1', description: 'Description of Department 1', createTime: '2024-01-25' },
-            { id: 2, title: 'Department 2', description: 'Description of Department 2', createTime: '2024-01-24' },
-            // Add more department data as needed
-        ];
-        const departmentsTableBody = document.getElementById('departments-table-body');
-
-        // Function to generate rows for departments
-        function generateDepartmentRows() {
-            departmentsTableBody.innerHTML = '';
-            departmentsData.forEach(department => {
-                const row = `
-            <tr>
-                <td class="cell">${department.id}</td>
-                <td class="cell">${department.title}</td>
-                <td class="cell">${department.description}</td>
-                <td class="cell">${department.createTime}</td>
-                <td class="cell">
-                    <button class="btn btn-sm btn-danger " style="color: #FFF7F5" onclick="deleteDepartment(${department.id})">Delete</button>
-                </td>
-            </tr>
-        `;
-                departmentsTableBody.insertAdjacentHTML('beforeend', row);
-            });
+        // get status from URL
+        const status = new URLSearchParams(window.location.search).get('status');
+        // check status
+        if (status === 'success') {
+            alert('Department added successfully!');
+        }else if (status === 'error') {
+            // get message
+            const message = new URLSearchParams(window.location.search).get('message');
+            alert(message);
         }
         // Function to delete a department
         function deleteDepartment(departmentId) {
@@ -212,8 +220,6 @@
             // Then call generateDepartmentRows() to update the table
             confirm('Are you sure you want to delete this department?');
         }
-        // Call the function to generate department rows initially
-        generateDepartmentRows();
     </script>
     <!-- Page Specific JS -->
     <script src="../assets/js/app.js"></script>

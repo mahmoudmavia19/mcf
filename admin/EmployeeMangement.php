@@ -1,3 +1,6 @@
+<?php
+include "../../action/config.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,7 +56,7 @@
                 <ul class="app-menu list-unstyled accordion" id="menu-accordion">
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link " href="index.html">
+                        <a class="nav-link " href="index.php">
 						        <span class="nav-icon">
 						        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 		  <path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z"/>
@@ -65,7 +68,7 @@
                     </li><!--//nav-item-->
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link" href="BorrowerManagement.html">
+                        <a class="nav-link" href="BorrowerManagement.php">
 						        <span class="nav-icon">
 						       <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-people" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                   <path fill-rule="evenodd" d="M12.5 10.5a2 2 0 1 0-3.999-.001A2 2 0 0 0 12.5 10.5zm-7 0a2 2 0 1 0-3.999-.001A2 2 0 0 0 5.5 10.5zm5-7a3 3 0 1 1-5.999-.001A3 3 0 0 1 10.5 3.5z"/>
@@ -89,7 +92,7 @@
                         <div id="submenu-1" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
                             <ul class="submenu-list list-unstyled">
                                 <li class="submenu-item"><a class="submenu-link active" href="EmployeeMangement.html">Show Employees</a></li>
-                                <li class="submenu-item"><a class="submenu-link" href="AddEmployee.html">Add Employee</a></li>
+                                <li class="submenu-item"><a class="submenu-link" href="AddEmployee.php">Add Employee</a></li>
 <!--
                                 <li class="submenu-item"><a class="submenu-link" href="SendNotification.html">Send Notification</a></li>
 -->
@@ -111,8 +114,8 @@
                         </a><!--//nav-link-->
                         <div id="submenu-2" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
                             <ul class="submenu-list list-unstyled">
-                                <li class="submenu-item"><a class="submenu-link" href="DepartmentManagement.html">Show Department</a></li>
-                                <li class="submenu-item"><a class="submenu-link" href="AddDepartment.html">Add Department</a></li>
+                                <li class="submenu-item"><a class="submenu-link" href="DepartmentManagement.php">Show Department</a></li>
+                                <li class="submenu-item"><a class="submenu-link" href="AddDepartment.php">Add Department</a></li>
                             </ul>
                         </div>
                     </li><!--//nav-item-->
@@ -171,6 +174,70 @@
                                     </thead>
                                     <tbody>
                                     <!-- Employee data rows will be populated dynamically -->
+                                     <?php
+                                     $sql = "SELECT employee_id, email, name, phone , rate ,department_id,is_blocked FROM employee";
+                                     $result = $conn->query($sql);
+                                     // get department data from using department_id  for each employee
+
+                                    $employeesData = array();
+                                    while ($row = $result->fetch_assoc()) { ?>
+                                        <tr>
+                                            <td class="cell" data-title="Employee ID">
+                                                <?php echo $row['employee_id']; ?>
+                                            </td>
+                                            <td class="cell" data-title="Email">
+                                                <?php echo $row['email']; ?>
+                                            </td>
+                                            <td class="cell" data-title="Name">
+                                                <?php echo $row['name']; ?>
+                                            </td>
+                                            <td class="cell" data-title="Phone">
+                                                <?php echo $row['phone']; ?>
+                                            </td>
+                                            <td class="cell" data-title="Department">
+                                                <?php
+                                                $department_id = $row['department_id'];
+                                                $sql2 = "SELECT name FROM department WHERE id = $department_id";
+                                                $result2 = $conn->query($sql2);
+                                                $department_name = $result2->fetch_assoc()['name'];
+                                                echo $department_name;
+                                                ?>
+                                            </td>
+                                            <td class="cell" data-title="Rate">
+                                                <?php
+                                                // get rate as stars for each employee from rate
+                                                $rate = $row['rate'];
+                                                $stars = 0 ;
+                                                for ($i = 1; $i <= $rate; $i++) {
+                                                    echo '<i class="fas fa-star text-warning"></i>';
+                                                    $stars++ ;
+                                                }
+                                                for ($i = $stars; $i < 5; $i++) {
+                                                    echo '<i class="far fa-star text-warning"></i>';
+                                                }
+
+                                                ?>
+
+                                            </td>
+                                    <!-- block employee -->
+                                            <td class="cell" data-title="Block">
+                                                <a class="btn btn-sm btn-danger"
+                                                   href="actions/block_employee.php?id=<?php echo $row['employee_id'] ?>"
+                                                   style="color: #FFF7F5" onclick="return confirm('Are you sure you want to block this employee?')">
+                                                    <!-- toggle block employee -->
+                                                    <?php
+                                                    if ($row['is_blocked'] == 0) {
+                                                        echo "Block";
+                                                    }
+                                                    else {
+                                                        echo "Unblock";
+                                                    }
+                                                    ?>
+
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
                                     </tbody>
                                 </table>
                             </div><!--//table-responsive-->
@@ -192,60 +259,17 @@
 <!-- Javascript -->
 <script src="../assets/js/popper.min.js"></script>
 <script src="../assets/js/bootstrap.min.js"></script>
-    <!-- Inside your JavaScript file or script tag -->
 <script>
-        // Sample data for demonstration purposes
-        const employeesData = [
-            { id: 1, email: 'employee1@example.com', name: 'employee1', phone: '053-456-7890',Department:'Marketing' ,rate: '4' },
-            { id: 2, email: 'employee2@example.com', name: 'employee2', phone: '057-654-3210',Department:'Finance' ,rate: '3' },
-            // Add more employee data as needed
-        ];
-
-        // Get the table body
-        const tableBody = document.querySelector('#employees-all tbody');
-
-        // Function to generate rows for employees
-        function generateEmployeeRows() {
-            // Clear existing rows
-            tableBody.innerHTML = '';
-
-
-
-            // Loop through each employee and create a row
-            employeesData.forEach(employee => {
-                const rate = `<div  class="rating-body">
-                    <div class="rating-stars">
-                         <label for="star5" class="${employee.rate >=1 ? 'filled' : ''}" title="5 stars">&#9733;</label>
-                         <label for="star4" class="${employee.rate >= 2 ? 'filled' : ''}" title="4 stars">&#9733;</label>
-                         <label for="star3" class="${employee.rate >= 3 ? 'filled' : ''}" title="3 stars">&#9733;</label>
-                         <label for="star2" class="${employee.rate >= 4 ? 'filled' : ''}" title="2 stars">&#9733;</label>
-                         <label for="star1" class="${employee.rate >= 5 ? 'filled' : ''}" title="1 star">&#9733;</label>
-                    </div>
-                 </div>`;
-                const row = `
-            <tr>
-                <td class="cell">${employee.id}</td>
-                <td class="cell">${employee.email}</td>
-                <td class="cell">${employee.name}</td>
-                <td class="cell">${employee.phone}</td>
-                <td class="cell">${employee.Department}</td>
-                <td class="cell">${rate}</td>
-                <td class="cell">
-                    <!-- Add buttons or actions for each employee -->
-                     <button class="btn btn-sm btn-danger" onclick="confirm('Are you sure you want to block this employee?')" style="color: #FFF7F5">block</button>
-                </td>
-            </tr>
-        `;
-                // Append the row to the table body
-                tableBody.insertAdjacentHTML('beforeend', row);
-            });
-        }
-
-        // Call the function to generate rows initially
-        generateEmployeeRows();
-    </script>
-
-
+    // get status from URL
+    const status = new URLSearchParams(window.location.search).get('status');
+    // check status
+    if (status === 'success') {
+        //alert('Employee added successfully!');
+    } else if (status === 'error') {
+        // get message
+        const message = new URLSearchParams(window.location.search).get('message');
+    }
+</script>
 <!-- Page Specific JS -->
 <script src="../assets/js/app.js"></script>
 

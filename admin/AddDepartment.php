@@ -53,7 +53,7 @@
                 <ul class="app-menu list-unstyled accordion" id="menu-accordion">
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link " href="index.html">
+                        <a class="nav-link" href="index.php">
 						        <span class="nav-icon">
 						        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 		  <path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5H9.5a.5.5 0 0 1-.5-.5v-4H7v4a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6zM2.5 7.707V14H6v-4a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v4h3.5V7.707L8 2.207l-5.5 5.5z"/>
@@ -63,8 +63,21 @@
                             <span class="nav-link-text">Overview</span>
                         </a><!--//nav-link-->
                     </li><!--//nav-item-->
+                    <li class="nav-item">
+                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                        <a class="nav-link" href="BorrowerManagement.php">
+						        <span class="nav-icon">
+						       <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-people" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd" d="M12.5 10.5a2 2 0 1 0-3.999-.001A2 2 0 0 0 12.5 10.5zm-7 0a2 2 0 1 0-3.999-.001A2 2 0 0 0 5.5 10.5zm5-7a3 3 0 1 1-5.999-.001A3 3 0 0 1 10.5 3.5z"/>
+                                  <path d="M2.868 12.474c.62.206 1.292.326 2.016.326s1.396-.12 2.016-.326A4.513 4.513 0 0 1 8 13.5c1.316 0 2.5-.422 3.514-1.082a8.475 8.475 0 0 0-6.014.056A6.345 6.345 0 0 1 8 12.5c-.796 0-1.532-.154-2.132-.426a10.402 10.402 0 0 1-.918-.6z"/>
+                                 </svg>
+						         </span>
+                            <span class="nav-link-text">Borrowers Management</span>
+                        </a><!--//nav-link-->
+                    </li><!--//nav-item-->
+
                     <li class="nav-item has-submenu">
-                        <a class="nav-link submenu-toggle active" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
+                        <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
 						        <span class="nav-icon">
 						             <i class="fas fa-users"></i>
 						         </span>
@@ -75,15 +88,17 @@
                         </a><!--//nav-link-->
                         <div id="submenu-1" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
                             <ul class="submenu-list list-unstyled">
-                                <li class="submenu-item"><a class="submenu-link" href="EmployeeMangement.html">Show Employees</a></li>
-                                <li class="submenu-item"><a class="submenu-link" href="AddEmployee.html">Add Employee</a></li>
-                                <li class="submenu-item"><a class="submenu-link active" href="SendNotification.html">Send Notification</a></li>
+                                <li class="submenu-item"><a class="submenu-link" href="EmployeeMangement.php">Show Employees</a></li>
+                                <li class="submenu-item"><a class="submenu-link" href="AddEmployee.php">Add Employee</a></li>
+<!--
+                                <li class="submenu-item"><a class="submenu-link" href="SendNotification.html">Send Notification</a></li>
+-->
 
                             </ul>
                         </div>
                     </li><!--//nav-item-->
                     <li class="nav-item has-submenu">
-                        <a class="nav-link submenu-toggle " href="#" data-bs-toggle="collapse" data-bs-target="#submenu-2" aria-expanded="false" aria-controls="submenu-2">
+                        <a class="nav-link submenu-toggle active " href="#" data-bs-toggle="collapse" data-bs-target="#submenu-2" aria-expanded="false" aria-controls="submenu-2">
 						        <span class="nav-icon">
 						        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
 						            <i class="fas fa-building"></i>
@@ -96,10 +111,19 @@
                         </a><!--//nav-link-->
                         <div id="submenu-2" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
                             <ul class="submenu-list list-unstyled">
-                                <li class="submenu-item"><a class="submenu-link" href="DepartmentManagement.html">Show Department</a></li>
-                                <li class="submenu-item"><a class="submenu-link" href="AddDepartment.html">Add Department</a></li>
+                                <li class="submenu-item"><a class="submenu-link" href="DepartmentManagement.php">Show Department</a></li>
+                                <li class="submenu-item " ><a class="submenu-link active" href="AddDepartment.php">Add Department</a></li>
                             </ul>
                         </div>
+                    </li><!--//nav-item-->
+                    <li class="nav-item" >
+                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                        <a class="nav-link" href="../index.html">
+						        <span class="nav-icon">
+                                    <i style="color:red;" class="fas fa-sign-out-alt"></i>
+						         </span>
+                            <span class="nav-link-text" style="color:red;" >Logout</span>
+                        </a><!--//nav-link-->
                     </li><!--//nav-item-->
                 </ul><!--//app-menu-->
             </nav><!--//app-nav-->
@@ -114,49 +138,29 @@
 
             <div class="row g-3 mb-4 align-items-center justify-content-between">
                 <div class="col-auto">
-                    <h1 class="app-page-title mb-0">Send Notification</h1>
+                    <h1 class="app-page-title mb-0">Department</h1>
                 </div>
-
                 <div class="app-card-body">
-                    <form class="notification-form">
+                    <form class="department-form" action="actions/addDepartment.php" method="POST">
                         <div class="mb-3">
-                            <label for="borrower-name" class="form-label">Borrower's Name</label>
-                            <input type="text" class="form-control" id="borrower-name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="delivery-date" class="form-label">Delivery Date</label>
-                            <input type="date" class="form-control" id="delivery-date" required>
+                            <label for="department-input-name" class="form-label">Department Name</label>
+                            <input type="text" name="name" class="form-control" id="department-input-name" value="" required>
                         </div>
                         <div class="mb-3">
-                            <label for="return-date" class="form-label">Return Date</label>
-                            <input type="date" class="form-control" id="return-date" required>
+                            <label for="department-input-description" class="form-label">Department Description</label>
+                            <textarea name="description" class="form-control" id="department-input-description" rows="3" required></textarea>
                         </div>
-                        <div class="mb-3">
-                            <label for="admin-notes" class="form-label">Administrator's Notes</label>
-                            <textarea class="form-control" style="height: 100px" id="admin-notes" rows="3"></textarea>
-                        </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="raise-alert">
-                            <label class="form-check-label" for="raise-alert">Raise Alert</label>
-                        </div>
-                        <button type="submit" onclick="confirm('Are you sure?')" class="btn app-btn-primary">Send Notification</button>
+                        <button type="submit" onclick="return confirm('Are you sure?')" class="btn app-btn-primary">Add Department</button>
                     </form>
                 </div>
-
-
             </div><!--//container-fluid-->
         </div><!--//app-content-->
-
-
     </div><!--//app-wrapper-->
 </div>
-
     <!-- Javascript -->
     <script src="../assets/js/popper.min.js"></script>
     <script src="../assets/js/bootstrap.min.js"></script>
     <!-- Inside your JavaScript file or script tag -->
-    <script>
-    </script>
 
     <!-- Page Specific JS -->
     <script src="../assets/js/app.js"></script>

@@ -1,7 +1,23 @@
+
+<?php
+include '../action/config.php';
+
+session_start() ;
+if(isset($_GET['message'])) {
+    $message = $_GET['message'];
+    echo "<script type='text/javascript'>alert('$message');</script>";
+}
+if (isset($_SESSION['id'])) {
+    $officer_id =  $_SESSION['id'];
+
+}else {
+    header('Location: ../');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Requests | MCF</title>
+    <title>Equipments | MCF</title>
 
     <!-- Meta -->
     <meta charset="utf-8">
@@ -15,8 +31,8 @@
 
     <!-- App CSS -->
     <link id="theme-style" rel="stylesheet" href="../assets/css/portal.css">
-
-</head>
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+ </head>
 
 <body class="app">
 <header class="app-header fixed-top">
@@ -53,7 +69,7 @@
                 <ul class="app-menu list-unstyled accordion" id="menu-accordion">
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link " href="index.html">
+                        <a class="nav-link active" href="index.php">
 						        <span class="nav-icon">
                                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAuklEQVR4nO2VQQrCMBBF38oDtMvqUq9qPIqI3eiRjG4UpBcYUaZQQmoaYoKLfvgQksn8zM+QQBgboAU6QBx2wBFYk4gl8PAIiMM70KQIHTTRaSRRA5w1Zp8i1Nv17bQrjXmmCPXW/CquDBbADrhOuPRYWsCoxmcgmWnIVIk4vDGyUKmtdUSyKrCnHCSgPrWiIbzrvsl3+bHW1YE92RtBZiGZrcNpBlug4y6lHtUt+oSbTJXZ4Tcx47/xAjWhiVrWemq0AAAAAElFTkSuQmCC">
  						         </span>
@@ -62,7 +78,7 @@
                     </li><!--//nav-item-->
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link " href="equipmentAdd.html">
+                        <a class="nav-link" href="equipmentAdd.php">
 						        <span class="nav-icon">
                                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAhUlEQVR4nO2UOw6AIBAF53rGW0uM8RpiiWdYGwuDHz4LodBJXkGzE3YX4CeRHlgByYwFujeBVRSXI8ubQAqlvSAX+Z5gA9zpPN7022gEzhOYG8GgEaRSXWC8GxWfQRDtDIJoWzQDU02BNN8iG/mZmcBcHhegi5QMkYKkBSACbYvbCy4veQeUerc7uKdqRQAAAABJRU5ErkJggg==">
  						         </span>
@@ -71,7 +87,7 @@
                     </li><!--//nav-item-->
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link active" href="requests.html">
+                        <a class="nav-link" href="requests.php">
 						        <span class="nav-icon">
                                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAABS0lEQVR4nO2aQU7CQBRA3yGkC04kcWfwKuJW4HoIZxAPIOiGDZgm04QMHWgTo/h9L/mb9i/6/3Sm7euASBsVMAeWwGeKF2CWzoXmAdgCh0LU58YELn5/pvgm9hGbUF0Y+Tw2wIBAzLMCd8AjMEwxSceOc6YEYpUVVxecM8ly6oWxxB3w1uOO+qlYA6O2C95mifWo5wxbFsQS6ysothSv39WATaQGLDtMgaceU2B0pU2oi79tu+BZlrhLTTi3CD7zjx+D78ANwRj3eBG6JyjjtLidG/mwxTcM0kvOAvhIsUhzPtxtLyIiIiJHqMUpfwuoxVGL0+gwtTiBWHVwgmpxThfEEn/OCm+zJLU4p6jFUYujFkctjlpcRERERIJSuVsctfjhwiYpd4ujFkctThl3i/P7+lstTo//AssOf4bU4qjFUYujFkctLkIIvgDF1UoaBg7GAAAAAABJRU5ErkJggg==">
  						         </span>
@@ -101,111 +117,141 @@
         </div><!--//sidepanel-inner-->
     </div><!--//app-sidepanel-->
 </header><!--//app-header-->
+
 <div class="app-wrapper">
 
     <div class="app-content pt-3 p-md-3 p-lg-4">
         <div class="container-xl">
             <div class="row g-3 mb-4 align-items-center justify-content-between">
                 <div class="col-auto">
-                    <h1 class="app-page-title mb-0">Requests</h1>
+                    <h1 class="app-page-title mb-0">Equipments</h1>
                 </div>
-                <div class="tab-content" id="requests-table-tab-content">
-                    <div class="tab-pane fade show active" id="requests" role="tabpanel" aria-labelledby="requests-tab">
-                        <div class="app-card app-card-requests-table shadow-sm mb-5">
+
+                <div class="tab-content" id="equipment-table-tab-content">
+                    <div class="tab-pane fade show active" id="equipment-all" role="tabpanel" aria-labelledby="equipment-all-tab">
+                        <div class="app-card app-card-equipment-table shadow-sm mb-5">
                             <div class="app-card-body">
                                 <div class="table-responsive">
                                     <table class="table app-table-hover mb-0 text-left">
                                         <thead>
                                         <tr>
-                                            <th class="cell">Request ID</th>
-                                            <th class="cell">Employee Name</th>
-                                            <th class="cell">Equipment Name</th>
-                                            <th class="cell">Department</th>
+                                            <th class="cell">Equipment ID</th>
+                                            <th class="cell">Equipment</th>
+                                             <th class="cell">Description</th>
                                             <th class="cell">Quantity</th>
-                                            <th class="cell">Request Date</th>
-                                            <th class="cell">Return Date</th>
-                                            <th class="cell">Action</th>
+                                            <th class="cell">Availability</th>
+                                            <th class="cell"></th>
                                         </tr>
                                         </thead>
-                                        <tbody id="request-table-body">
-                                        <!-- Request data rows will be populated dynamically -->
+                                        <tbody>
+                                        <?php
+                                        // get all equipment where officer id is same  data from the database
+                                        $sql = "SELECT * FROM equipment WHERE officer_id = " .$officer_id;
+
+                                         $result = $conn->query($sql);
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                $availability = $row['availability']?"Available":"Not Available";
+                                                echo "<tr>";
+                                                echo "<td class='cell'>" . $row['equipment_id'] . "</td>";
+                                                echo "<td class='cell'>" . $row['name'] . "</td>";
+                                                 echo "<td class='cell'>" . $row['description'] . "</td>";
+                                                echo "<td class='cell'>" . $row['quantity'] . "</td>";
+                                                echo "<td class='cell'>" . $availability. "</td>";
+                                                echo "<td class='cell'><button class='btn btn-sm btn-primary' style='color: #FFF' onclick='editQuantity(" . $row['equipment_id'] . ")' >Edit</button></td>";
+                                                echo "<td class='cell'><a href='actions/delete_equipment.php?id=" . $row['equipment_id'] . "' class='btn btn-sm btn-danger' style='color: #FFF' onclick='return confirm(\"Are you sure you want to delete?\")' >Delete</a></td>";
+                                                echo "</tr>";
+                                            }
+                                        }
+
+                                        ?>
                                         </tbody>
                                     </table>
                                 </div><!--//table-responsive-->
+
                             </div><!--//app-card-body-->
                         </div><!--//app-card-->
+                        <!-- Pagination for equipments if needed -->
                     </div><!--//tab-pane-->
+                    <!-- Additional tab panes for specific categories if needed -->
                 </div><!--//tab-content-->
-            </div><!--//row-->
-        </div><!--//container-xl-->
-    </div><!--//app-content-->
+
+            </div><!--//container-fluid-->
+
+        </div><!--//app-content-->
 
     </div><!--//app-wrapper-->
 </div>
+  <!-- Equipment Modal -->
+<div class="modal fade" id="editQuantityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Change Equipment Quantity</h5>
+                <button type="button"  onclick="closeModal()"  class="close" data-dismiss="modal" aria-label="Close" >
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <label>Equipment ID : </label>
+                    <label  id="quantityId"></label>
+                </div>
 
+               <input class="form-control" type="number" id="newQuantity">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()">Close</button>
+                <button type="button" class="btn btn-primary" onclick="saveQuantity()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <!-- Javascript -->
 <script src="../assets/js/popper.min.js"></script>
 <script src="../assets/js/bootstrap.min.js"></script>
 
 <script>
-    // Sample data for demonstration purposes
-    const requestData = [
-        { request_id: 1, employee_name: "John Doe", equipment_name: "X-Ray Machine", Department: "Radiology",EquipmentQuantity: 1,time_date: '2024-01-28', return_time: '2024-02-05' },
-        { request_id: 2, employee_name: "Jane Smith",equipment_name: "MRI Scanner", Department: "Cardiology" ,time_date: '2024-01-29', EquipmentQuantity: 1,return_time: '2024-02-06' },
-        // Add more request data as needed
-    ];
 
-    // Get the request table body
-    const requestTableBody = document.getElementById('request-table-body');
+    // Get the table body
+    const tableBody = document.querySelector('#equipment-all tbody');
 
-    // Function to generate rows for requests
-    function generateRequestRows() {
-        // Clear existing rows
-        requestTableBody.innerHTML = '';
 
-        // Loop through each request and create a row
-        requestData.forEach(request => {
-            const row = `
-                    <tr>
-                        <td class="cell">${request.request_id}</td>
-                        <td class="cell">${request.employee_name}</td>
-                        <td class="cell">${request.equipment_name}</td>
-                        <td class="cell">${request.Department}</td>
-                        <td class="cell">${request.EquipmentQuantity}</td>
-                        <td class="cell">${request.time_date}</td>
-                        <td class="cell">${request.return_time}</td>
-                        <td class="cell">
-                            <button class="btn btn-sm btn-success" style="color: white" onclick="acceptRequest(${request.request_id})">Accept</button>
-                            <button class="btn btn-sm btn-danger"  style="color: white" onclick="rejectRequest(${request.request_id})">Reject</button>
-                        </td>
-                    </tr>
-                `;
-            // Append the row to the request table body
-            requestTableBody.insertAdjacentHTML('beforeend', row);
-        });
-    }
 
     // Call the function to generate rows initially
-    generateRequestRows();
 
-    // Function to handle accepting a request
-    function acceptRequest(requestId) {
-        // Implement logic to accept the request with the given ID
-        console.log('Accepted request ID:', requestId);
 
-        confirm( "You have accepted the request. Do you want to proceed?");
+    let editingEquipmentId;
+
+    function editQuantity(id) {
+        editingEquipmentId = id;
+        // add id to quantity id
+        $('#quantityId').text(id);
+        $('#editQuantityModal').modal('show');
     }
 
-    // Function to handle rejecting a request
-    function rejectRequest(requestId) {
-        // Implement logic to reject the request with the given ID
-        console.log('Rejected request ID:', requestId);
-        confirm("You have rejected the request. Do you want to proceed?");
+    function saveQuantity() {
+        // Fetch new quantity from input field
+        const newQuantity = document.getElementById('newQuantity').value;
+
+        // Redirect to PHP endpoint to update quantity
+        window.location.href = `actions/edit_equipment.php?equipment_id=${editingEquipmentId}&quantity=${newQuantity}`;
+
+        // hide model
+        $('#editQuantityModal').modal('hide');
+    }
+    function  closeModal() {
+        $('#deleteConfirm').modal('hide');
+        $('#editQuantityModal').modal('hide');
     }
 </script>
 <!-- Page Specific JS -->
-<script src="../assets/js/app.js"></script>
+<script src="/assets/js/app.js"></script>
 
 </body>
 </html>

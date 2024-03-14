@@ -11,11 +11,15 @@ const usersMap = array(
 );
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
+// initialize session
+session_start();
 
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+// Return JSON response
+$response = array();
 
 // Fetch email and password from POST request
 $email = $_POST['email'];
@@ -37,6 +41,17 @@ foreach ($tables as $table) {
     if ($result->num_rows > 0) {
         $loggedIn = true;
         $userType = $table == "equipment_officer" ? "officer" : $table;
+        // Return JSON response
+        $row = $result->fetch_assoc();
+        if($userType=='officer'){
+            $response['id'] = $row['officer_id'];;
+        } else if ($userType == 'admin') {
+            $response['id'] = $row['admin_id'];
+        } else if ($userType == 'employee') {
+            $response['id'] = $row['employee_id'];
+        }
+        // add id in session
+        $_SESSION['id'] = $response['id'];
         break;
     }
 }
@@ -44,8 +59,6 @@ foreach ($tables as $table) {
 // Close database connection
 $conn->close();
 
-// Return JSON response
-$response = array();
 
 if ($loggedIn) {
     $response['success'] = true;

@@ -1,7 +1,21 @@
+<?php
+
+session_start();
+include "../action/config.php";
+
+if (isset($_SESSION['id'])) {
+    $officer_id =  $_SESSION['id'];
+
+}else {
+    header('Location: ../');
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Equipments | MCF</title>
+    <title>Requests | MCF</title>
 
     <!-- Meta -->
     <meta charset="utf-8">
@@ -15,8 +29,8 @@
 
     <!-- App CSS -->
     <link id="theme-style" rel="stylesheet" href="../assets/css/portal.css">
-    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
- </head>
+
+</head>
 
 <body class="app">
 <header class="app-header fixed-top">
@@ -53,7 +67,7 @@
                 <ul class="app-menu list-unstyled accordion" id="menu-accordion">
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link active" href="index.html">
+                        <a class="nav-link " href="index.php">
 						        <span class="nav-icon">
                                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAuklEQVR4nO2VQQrCMBBF38oDtMvqUq9qPIqI3eiRjG4UpBcYUaZQQmoaYoKLfvgQksn8zM+QQBgboAU6QBx2wBFYk4gl8PAIiMM70KQIHTTRaSRRA5w1Zp8i1Nv17bQrjXmmCPXW/CquDBbADrhOuPRYWsCoxmcgmWnIVIk4vDGyUKmtdUSyKrCnHCSgPrWiIbzrvsl3+bHW1YE92RtBZiGZrcNpBlug4y6lHtUt+oSbTJXZ4Tcx47/xAjWhiVrWemq0AAAAAElFTkSuQmCC">
  						         </span>
@@ -62,7 +76,7 @@
                     </li><!--//nav-item-->
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link" href="equipmentAdd.html">
+                        <a class="nav-link " href="equipmentAdd.php">
 						        <span class="nav-icon">
                                     <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAhUlEQVR4nO2UOw6AIBAF53rGW0uM8RpiiWdYGwuDHz4LodBJXkGzE3YX4CeRHlgByYwFujeBVRSXI8ubQAqlvSAX+Z5gA9zpPN7022gEzhOYG8GgEaRSXWC8GxWfQRDtDIJoWzQDU02BNN8iG/mZmcBcHhegi5QMkYKkBSACbYvbCy4veQeUerc7uKdqRQAAAABJRU5ErkJggg==">
  						         </span>
@@ -71,7 +85,7 @@
                     </li><!--//nav-item-->
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link" href="requests.html">
+                        <a class="nav-link active" href="requests.html">
 						        <span class="nav-icon">
                                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAABS0lEQVR4nO2aQU7CQBRA3yGkC04kcWfwKuJW4HoIZxAPIOiGDZgm04QMHWgTo/h9L/mb9i/6/3Sm7euASBsVMAeWwGeKF2CWzoXmAdgCh0LU58YELn5/pvgm9hGbUF0Y+Tw2wIBAzLMCd8AjMEwxSceOc6YEYpUVVxecM8ly6oWxxB3w1uOO+qlYA6O2C95mifWo5wxbFsQS6ysothSv39WATaQGLDtMgaceU2B0pU2oi79tu+BZlrhLTTi3CD7zjx+D78ANwRj3eBG6JyjjtLidG/mwxTcM0kvOAvhIsUhzPtxtLyIiIiJHqMUpfwuoxVGL0+gwtTiBWHVwgmpxThfEEn/OCm+zJLU4p6jFUYujFkctjlpcRERERIJSuVsctfjhwiYpd4ujFkctThl3i/P7+lstTo//AssOf4bU4qjFUYujFkctLkIIvgDF1UoaBg7GAAAAAABJRU5ErkJggg==">
  						         </span>
@@ -101,183 +115,108 @@
         </div><!--//sidepanel-inner-->
     </div><!--//app-sidepanel-->
 </header><!--//app-header-->
-
 <div class="app-wrapper">
 
     <div class="app-content pt-3 p-md-3 p-lg-4">
         <div class="container-xl">
             <div class="row g-3 mb-4 align-items-center justify-content-between">
                 <div class="col-auto">
-                    <h1 class="app-page-title mb-0">Equipments</h1>
+                    <h1 class="app-page-title mb-0">Requests</h1>
                 </div>
-
-                <div class="tab-content" id="equipment-table-tab-content">
-                    <div class="tab-pane fade show active" id="equipment-all" role="tabpanel" aria-labelledby="equipment-all-tab">
-                        <div class="app-card app-card-equipment-table shadow-sm mb-5">
+                <div class="tab-content" id="requests-table-tab-content">
+                    <div class="tab-pane fade show active" id="requests" role="tabpanel" aria-labelledby="requests-tab">
+                        <div class="app-card app-card-requests-table shadow-sm mb-5">
                             <div class="app-card-body">
                                 <div class="table-responsive">
                                     <table class="table app-table-hover mb-0 text-left">
                                         <thead>
                                         <tr>
-                                            <th class="cell">Equipment ID</th>
-                                            <th class="cell">Equipment</th>
-                                            <th class="cell">Employee</th>
-                                            <th class="cell">Description</th>
+                                            <th class="cell">Request ID</th>
+                                            <th class="cell">Employee Name</th>
+                                            <th class="cell">Equipment Name</th>
                                             <th class="cell">Quantity</th>
-                                            <th class="cell">Availability</th>
-                                            <th class="cell"></th>
+                                            <th class="cell">Request Date</th>
+                                            <th class="cell">Return Date</th>
+                                            <th class="cell">Action</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        <!-- Equipment data rows will be populated dynamically -->
+                                        <tbody id="request-table-body">
+                                        <?php
+                                        $sql = "SELECT * FROM requests";
+                                        $result = $conn->query($sql);
+                                        // complete the while loop
+                                        while ($row = $result->fetch_assoc()) {
+                                            $id = $row['request_id'];
+                                            // get name of employee from employee_id
+                                            $employee_id = $row['employee_id'];
+                                            $sql2 = "SELECT * FROM employee WHERE employee_id = $employee_id";
+                                            $result2 = $conn->query($sql2);
+                                            $row2 = $result2->fetch_assoc();
+                                            $employee_name = $row2['name'];
+                                            // get equipment name from equipment_id
+                                            $equipment_id = $row['equipment_id'];
+                                            $sql3 = "SELECT * FROM equipment WHERE equipment_id = $equipment_id";
+                                            $result3 = $conn->query($sql3);
+                                            $row3 = $result3->fetch_assoc();
+                                            $equipment_name = $row3['name'];
+
+                                            $quantity = $row['quantity'];
+                                            $request_date = $row['date'];
+                                            $return_date = $row['return_date'];
+                                            ?>
+                                            <tr>
+                                                <td><?php echo $id; ?></td>
+                                                <td><?php echo $employee_name; ?></td>
+                                                <td><?php echo $equipment_name; ?></td>
+                                                <td><?php echo $quantity; ?></td>
+                                                <td><?php echo $request_date; ?></td>
+                                                <td><?php echo $return_date; ?></td>
+                                                <td><button class="btn btn-sm btn-primary" onclick="acceptRequest(<?php echo $id; ?>)">Accept</button>
+                                                    <button class="btn btn-sm btn-danger" style="color:#fff;" onclick="rejectRequest(<?php echo $id; ?>)">Reject</button></td>
+                                            </tr>
+                                            <?php
+                                        }
+                                        ?>
                                         </tbody>
+
                                     </table>
                                 </div><!--//table-responsive-->
-
                             </div><!--//app-card-body-->
                         </div><!--//app-card-->
-                        <!-- Pagination for equipments if needed -->
                     </div><!--//tab-pane-->
-                    <!-- Additional tab panes for specific categories if needed -->
                 </div><!--//tab-content-->
-
-            </div><!--//container-fluid-->
-
-        </div><!--//app-content-->
+            </div><!--//row-->
+        </div><!--//container-xl-->
+    </div><!--//app-content-->
 
     </div><!--//app-wrapper-->
 </div>
-  <!-- Equipment Modal -->
-<div class="modal fade" id="editQuantityModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Change Equipment Quantity</h5>
-                <button type="button"  onclick="closeModal()"  class="close" data-dismiss="modal" aria-label="Close" >
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-               <input class="form-control" type="number" id="newQuantity">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()">Close</button>
-                <button type="button" class="btn btn-primary" onclick="saveQuantity()">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- Delete Confirmation Modal -->
-<div class="modal fade" id="deleteConfirm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
-                <button type="button" onclick="closeModal()" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete this equipment?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()">Cancel</button>
-                <button type="button" class="btn btn-danger" onclick="confirmDelete()">Delete</button>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <!-- Javascript -->
 <script src="../assets/js/popper.min.js"></script>
 <script src="../assets/js/bootstrap.min.js"></script>
 
 <script>
-    // Sample data for demonstration purposes
-    const equipmentsData = [
-        { id: 1, name: 'Camera', employee:'Employee 1' ,description: 'Description 1', quantity: 5, availability: 'Available' },
-        { id: 2, name: 'Mouse', employee:'Employee 2' ,description: 'Description 2', quantity: 3, availability: 'Unavailable' },
-        // Add more equipment data as needed
-    ];
 
-    // Get the table body
-    const tableBody = document.querySelector('#equipment-all tbody');
 
-    // Function to generate rows for equipments
-    function generateEquipmentRows() {
-        // Clear existing rows
-        tableBody.innerHTML = '';
+    // Function to handle accepting a request
+    function acceptRequest(requestId) {
+        // Implement logic to accept the request with the given ID
+        console.log('Accepted request ID:', requestId);
 
-        // Loop through each equipment and create a row
-        equipmentsData.forEach(equipment => {
-            const row = `
-            <tr>
-                <td class="cell">${equipment.id}</td>
-                <td class="cell">${equipment.name}</td>
-                <td class="cell">${equipment.employee}</td>
-                <td class="cell">${equipment.description}</td>
-                <td class="cell">${equipment.quantity}</td>
-                <td class="cell">${equipment.availability}</td>
-                <td class="cell">
-                <td class="cell">
-                <button class="btn btn-sm btn-primary" style="color: #FFF" onclick="editQuantity(${equipment.id})">Edit</button>
-
-                <button class="btn btn-sm btn-danger" style="color: #FFF" onclick="deleteEquipment(${equipment.id})">Delete</button>
-               </td>
-                </td>
-            </tr>
-        `;
-            // Append the row to the table body
-            tableBody.insertAdjacentHTML('beforeend', row);
-        });
+        confirm( "You have accepted the request. Do you want to proceed?");
     }
 
-    // Call the function to generate rows initially
-    generateEquipmentRows();
-
-
-    let editingEquipmentId;
-
-    function editQuantity(id) {
-        editingEquipmentId = id;
-        $('#editQuantityModal').modal('show');
-    }
-
-    function saveQuantity() {
-/*        const newQuantity = document.getElementById('newQuantity').value;
-        // You can handle the saving logic here, for demonstration, we'll just log the value
-        console.log('New Quantity:', newQuantity);
-        // Clear input
-        document.getElementById('newQuantity').value = '';*/
-        // Close the modal
-        $('#editQuantityModal').modal('hide');
-    }
-
-    // Function to handle delete confirmation
-    function deleteEquipment(id) {
-        editingEquipmentId = id;
-        $('#deleteConfirm').modal('show');
-    }
-
-    // Function to handle confirmed deletion
-    function confirmDelete() {
-        // Here you can implement the logic to delete the equipment
-        console.log('Deleting equipment with ID:', editingEquipmentId);
-        // Close the modal after deletion
-        $('#deleteConfirm').modal('hide');
-    }
-    function  closeModal() {
-        $('#deleteConfirm').modal('hide');
-        $('#editQuantityModal').modal('hide');
+    // Function to handle rejecting a request
+    function rejectRequest(requestId) {
+        // Implement logic to reject the request with the given ID
+        console.log('Rejected request ID:', requestId);
+        confirm("You have rejected the request. Do you want to proceed?");
     }
 </script>
 <!-- Page Specific JS -->
-<script src="/assets/js/app.js"></script>
+<script src="../assets/js/app.js"></script>
 
 </body>
 </html>
