@@ -1,3 +1,24 @@
+<?php
+include "../../action/config.php";
+session_start();
+include "../action/config.php";
+
+if (isset($_SESSION['id'])) {
+    $officer_id =  $_SESSION['id'];
+
+}else {
+    header('Location: ../');
+}
+
+// get message from url
+if(isset($_GET['message'])) {
+    $message = $_GET['message'];
+    echo "<script type='text/javascript'>alert('$message');</script>";
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -131,7 +152,67 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!-- Request data rows will be populated dynamically -->
+                                        <?php
+                                        // gwt all requests whare status equal to 2
+                                        $sql = "SELECT * FROM requests WHERE status != 2";
+                                        $result = $conn->query($sql);
+                                        // complete the while loop
+                                        while ($row = $result->fetch_assoc()) {
+                                        $id = $row['request_id'];
+                                        // get name of employee from employee_id
+                                        $employee_id = $row['employee_id'];
+                                        $sql2 = "SELECT * FROM employee WHERE employee_id = $employee_id";
+                                        $result2 = $conn->query($sql2);
+                                        $row2 = $result2->fetch_assoc();
+                                        $employee_name = $row2['name'];
+                                        // get equipment name from equipment_id
+                                        $equipment_id = $row['equipment_id'];
+                                        $sql3 = "SELECT * FROM equipment WHERE equipment_id = $equipment_id";
+                                        $result3 = $conn->query($sql3);
+                                        $row3 = $result3->fetch_assoc();
+                                        $equipment_name = $row3['name'];
+
+                                        $quantity = $row['quantity'];
+                                        $request_date = $row['date'];
+                                        $return_date = $row['return_date'];
+                                        // get rate and not using equipment_id from rate table
+                                        $sql4 = "SELECT * FROM rate WHERE request_id = $id";
+                                        $result4 = $conn->query($sql4);
+                                        $row4 = $result4->fetch_assoc();
+                                        if ($row4 != null) {
+                                            $rate = $row4['number'];
+                                            $note = $row4['note'];
+                                        }
+                                        else {
+                                            $rate = 0;
+                                            $note = "";
+                                        }
+
+
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $id; ?></td>
+                                            <td><?php echo $employee_name; ?></td>
+                                            <td><?php echo $equipment_name; ?></td>
+                                            <td><?php echo $quantity; ?></td>
+                                            <td><?php echo $return_date; ?></td>
+                                            <td><?php echo $note ?></td>
+                                            <td>
+                                            <?php
+                                             for ($i = 1; $i <= 5; $i++) {
+                                                 if ($i <= $rate) {
+                                                     echo '<i class="fas fa-star text-warning"></i>';
+                                                 } else {
+                                                     echo '<i class="fas fa-star"></i>';
+                                                 }
+                                             }
+                                            ?>
+                                            </td>
+                                            <td> <button type="button" class="btn btn-primary" onclick="AddRateDialog(<?php echo $id; ?>)"  data-bs-target="#editQuantityModal">Rate</button></td>
+                                        </tr>
+                                        <?php
+                                        }
+                                        ?>
                                         </tbody>
                                     </table>
                                 </div><!--//table-responsive-->
@@ -163,6 +244,7 @@
                         Description
                     </label>
                     <textarea type="text" class="form-control" id="DescriptionInput" placeholder="Description"></textarea>
+                    <label id="request_id_label" hidden=""></label>
                 </div>
                 <div id="ratingDialog" class="rating-dialog">
                     <div class="rating-stars">
@@ -199,59 +281,16 @@
 <script src="../assets/js/bootstrap.min.js"></script>
 <!-- Inside your JavaScript file or script tag -->
 <script>
-    // Sample data for demonstration purposes
-    const requestData = [
-        { id: 1, employee_name: 'Employee 1',employee_email: 'sLX5v@example.com' ,equipment_name: 'printer screen', Equipment_quantity: '10' ,return_date: '2024-02-10', note: 'it was returned in time', rate: '5/5' },
-        { id: 2, employee_name: 'Employee 2', employee_email: 'sLX5v@example.com' ,equipment_name: 'Xerox printer',Equipment_quantity: '5' ,return_date: '2024-02-11', note: 'it was not returned in time', rate: '1/5' },
-        // Add more request data as needed
-    ];
-
-    // Get the table body
-    const requestTableBody = document.querySelector('#requests-all tbody');
-
-    // Function to generate rows for requests
-    function generateRequestRows() {
-        // Clear existing rows
-        requestTableBody.innerHTML = '';
-
-        // Loop through each request and create a row
-        requestData.forEach(request => {
-            const row = `
-                <tr>
-                    <td class="cell">${request.id}</td>
-                    <td class="cell">${request.employee_name}</td>
-                    <td class="cell">${request.equipment_name}</td>
-                    <td class="cell">${request.Equipment_quantity}</td>
-                    <td class="cell">${request.return_date}</td>
-                    <td class="cell">${request.note}</td>
-                    <td class="cell">
-                  <div  class="rating-body">
-                    <div class="rating-stars">
-                         <label for="star5" class="filled" title="5 stars">&#9733;</label>
-                         <label for="star4" class="filled" title="4 stars">&#9733;</label>
-                         <label for="star3" class="filled" title="3 stars">&#9733;</label>
-                         <label for="star2" title="2 stars">&#9733;</label>
-                         <label for="star1" title="1 star">&#9733;</label>
-                    </div>
-                 </div>
-</td>
-                    <td class="cell">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editQuantityModal">Rate</button>
-                    </td>
-                </tr>
-                `;
-            // Append row to table body
-            requestTableBody.insertAdjacentHTML('beforeend', row);
-        });
-    }
-
-    // Generate rows on page load
-    generateRequestRows();
 
     // Function to submit rating
     function submitRating() {
-        // Implement rating submission logic here
-        console.log('Rating submitted');
+       // get rating and note from input
+        const rating = $('input[name=rating]:checked', '#ratingDialog').val();
+        const note = $('#DescriptionInput').val();
+        // get id from label
+        const request_id = document.getElementById("request_id_label").innerHTML;
+        // go to add rating page and send rating and note and id
+        window.location.href = "actions/addRate.php?id=" + request_id + "&rate=" + rating + "&note=" + note;
         closeDialog();
     }
 
@@ -271,6 +310,8 @@
 
     function AddRateDialog(id) {
         editingEquipmentId = id;
+        var request_id_label = document.getElementById("request_id_label");
+        request_id_label.innerHTML = id;
         $('#editQuantityModal').modal('show');
     }
 

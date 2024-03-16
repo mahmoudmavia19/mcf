@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 include "../action/config.php";
 
@@ -8,6 +7,12 @@ if (isset($_SESSION['id'])) {
 
 }else {
     header('Location: ../');
+}
+
+// get message from url
+if(isset($_GET['message'])) {
+    $message = $_GET['message'];
+    echo "<script type='text/javascript'>alert('$message');</script>";
 }
 
 
@@ -94,7 +99,7 @@ if (isset($_SESSION['id'])) {
                     </li><!--//nav-item-->
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link" href="CompletedRequests.html">
+                        <a class="nav-link" href="CompletedRequests.php">
 						        <span class="nav-icon">
                                   <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAABC0lEQVR4nO3YMUoDQRQG4G9Zi2CCWAuSAwheIuARrIOk8AaS0gPYi4VnCHgCa0sbsbXT0kILIRKIsCwhadS8Wd4HUyzsDPwMu/w8Ukq/rcJAB0zxjGMFG+ELc3zgTIGGeFuG+Fmv2FeQHh5aIRY3cyK4PvYaz7etEIt1sWLf/B/XRjVmeMQhzlccMlv+vUIHuWm8/ILP1gFPrdsKGWSyYfM7jtbsDxNkF3drNp8qSI3rFSGuFOqyEeIeOwo2Xn7wBzpgoKOqroSbZvsNYpjtd4v62X7F6FoL2X5l+/0bdbbfwMbZfgtQZfsNZJSz3yB6Ofu1vdJY5+xXnJHpJGe/AdXZfgMbZ/tNKYnkG+vm+Sfg/YlgAAAAAElFTkSuQmCC">
  						         </span>
@@ -142,7 +147,8 @@ if (isset($_SESSION['id'])) {
                                         </thead>
                                         <tbody id="request-table-body">
                                         <?php
-                                        $sql = "SELECT * FROM requests";
+                                        // gwt all requests whare status equal to 2
+                                        $sql = "SELECT * FROM requests WHERE status = 2";
                                         $result = $conn->query($sql);
                                         // complete the while loop
                                         while ($row = $result->fetch_assoc()) {
@@ -171,8 +177,9 @@ if (isset($_SESSION['id'])) {
                                                 <td><?php echo $quantity; ?></td>
                                                 <td><?php echo $request_date; ?></td>
                                                 <td><?php echo $return_date; ?></td>
-                                                <td><button class="btn btn-sm btn-primary" onclick="acceptRequest(<?php echo $id; ?>)">Accept</button>
-                                                    <button class="btn btn-sm btn-danger" style="color:#fff;" onclick="rejectRequest(<?php echo $id; ?>)">Reject</button></td>
+                                                <!-- add href request_id and status to accept -->
+                                                <td><a  href= "actions/AcceptOrReject.php?id=<?php echo $id; ?> & status=0" class="btn btn-sm btn-primary" onclick="acceptRequest(<?php echo $id; ?>)">Accept</a>
+                                                    <a href="actions/AcceptOrReject.php?id=<?php echo $id; ?> & status=1" class="btn btn-sm btn-danger" style="color:#fff;" onclick="rejectRequest(<?php echo $id; ?>)">Reject</a></td>
                                             </tr>
                                             <?php
                                         }

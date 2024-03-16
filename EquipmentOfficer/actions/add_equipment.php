@@ -9,10 +9,14 @@ $quantity = $_POST['quantity'];
 $officer_id = $_SESSION['id'];
 $availability = $_POST['availability'];
 
-$sql = "INSERT INTO equipment (name, equipment_id, description, quantity, officer_id, availability) VALUES ('$name', '$equipment_id', '$description', '$quantity', '$officer_id', '$availability')";
+try {
+    $sql = "INSERT INTO equipment (name, equipment_id, description, quantity, officer_id, availability) VALUES ('$name', '$equipment_id', '$description', '$quantity', '$officer_id', '$availability')";
 // execute query
-if ($conn->query($sql) === TRUE) {
-    echo "Equipment added successfully";
-    header("Location: ../equipmentAdd.php?message=Equipment added successfully");
+    if ($conn->query($sql) === TRUE) {
+        echo "Equipment added successfully";
+        header("Location: ../equipmentAdd.php?message=Equipment added successfully");
+    }
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+    header("Location: ../equipmentAdd.php?message=Error adding equipment");
 }
-
